@@ -1,0 +1,20 @@
+{
+    "name": "ferreis/curso-composer-alura",
+    "description": "projeto de aulas da alura para aprender composer",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Ferreis\\CursoComposerAlura\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rafael",
+            "email": "rafa_ferreis@hotmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.9",
+        "symfony/dom-crawler": "*"
+    }
+}
