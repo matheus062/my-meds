@@ -1,0 +1,87 @@
+[
+  {
+    "type": "table",
+    "name": "agenda",
+    "columns": [
+      {
+        "name": "paciente",
+        "parentTable": "paciente"
+      },
+      {
+        "name": "dataConsulta",
+        "type": "timestamp"
+      }
+    ]
+  },
+  {
+    "type": "table",
+    "name": "receita",
+    "columns": [
+      {
+        "name": "codigoUnico",
+        "type": "varchar(32)"
+      },
+      {
+        "name": "dataEmissao",
+        "type": "timestamp"
+      },
+      {
+        "name": "tipoEspecial",
+        "type": "varchar(254)",
+        "null": true
+      },
+      {
+        "name": "observacoes",
+        "type": "varchar(254)",
+        "null": true
+      },
+      {
+        "name": "resgatada",
+        "type": "boolean",
+        "defaultValue": "'0'"
+      }
+    ]
+  },
+  {
+    "type": "table",
+    "name": "lembrete",
+    "columns": [
+      {
+        "name": "dataHora",
+        "type": "timestamp"
+      },
+      {
+        "name": "mensagem",
+        "type": "varchar(254)"
+      }
+    ]
+  },
+  {
+    "type": "table",
+    "name": "paciente_receita",
+    "columns": [
+      {
+        "name": "paciente",
+        "parentTable": "paciente"
+      },
+      {
+        "name": "receita",
+        "parentTable": "receita"
+      }
+    ]
+  },
+  {
+    "type": "table",
+    "name": "paciente_lembrete",
+    "columns": [
+      {
+        "name": "paciente",
+        "parentTable": "paciente"
+      },
+      {
+        "name": "lembrete",
+        "parentTable": "lembrete"
+      }
+    ]
+  }
+]

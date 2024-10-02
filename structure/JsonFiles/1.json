@@ -1,0 +1,47 @@
+[
+  {
+    "type": "table",
+    "name": "usuario",
+    "columns": [
+      {
+        "name": "nome",
+        "type": "varchar(150)"
+      },
+      {
+        "name": "rg",
+        "type": "varchar(25)",
+        "unique": true,
+        "null": true
+      },
+      {
+        "name": "cpf",
+        "type": "varchar(14)",
+        "unique": true
+      },
+      {
+        "name": "endereco",
+        "type": "text",
+        "null": true
+      },
+      {
+        "name": "telefone",
+        "type": "varchar(254)",
+        "null": true
+      },
+      {
+        "name": "email",
+        "type": "varchar(254)",
+        "null": true
+      },
+      {
+        "name": "username",
+        "type": "varchar(254)",
+        "unique": true
+      },
+      {
+        "name": "password",
+        "type": "varchar(254)"
+      }
+    ]
+  }
+]

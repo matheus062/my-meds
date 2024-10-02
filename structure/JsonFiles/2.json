@@ -1,0 +1,45 @@
+[
+  {
+    "type": "table",
+    "name": "medico",
+    "columns": [
+      {
+        "name": "usuario",
+        "parentTable": "usuario",
+        "unique": true
+      },
+      {
+        "name": "crm",
+        "type": "varchar(254)",
+        "unique": true
+      }
+    ]
+  },
+  {
+    "type": "table",
+    "name": "farmaceutico",
+    "columns": [
+      {
+        "name": "usuario",
+        "parentTable": "usuario",
+        "unique": true
+      },
+      {
+        "name": "empresa",
+        "type": "varchar(254)",
+        "unique": true
+      }
+    ]
+  },
+  {
+    "type": "table",
+    "name": "paciente",
+    "columns": [
+      {
+        "name": "usuario",
+        "parentTable": "usuario",
+        "unique": true
+      }
+    ]
+  }
+]
