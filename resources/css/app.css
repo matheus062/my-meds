@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.img
+{
+    background-color: aliceblue;
+    height: 50rem;
+    width: 50rem;
+}
+
+.custom-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
