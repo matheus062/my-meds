@@ -26,12 +26,15 @@
                     <x-nav-link :href="route('pharmacist.index')" >
                         {{ __('Farmaceutico') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('patient.create')">
+                        {{ __('Cadastrar Paciente') }}
+                    </x-nav-link>
                     @endif
                     @if (Auth::user()->medico)
                     <x-nav-link :href="route('doctor.index')">
                         {{ __('Medico') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('patient.create')" :active="request()->routeIs('paciente')">
+                    <x-nav-link :href="route('patient.create')">
                         {{ __('Cadastrar Paciente') }}
                     </x-nav-link>
                     <x-nav-link :href="route('receita.create')">

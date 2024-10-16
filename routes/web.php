@@ -25,12 +25,14 @@ Route::middleware(['checkIfDoctor'])->group(function () {
     Route::resource('/doctor', DoctorController::class);
     Route::get('/receita/create', [ReceitaController::class, 'create'])->name('receita.create');
     Route::post('/receita/store', [ReceitaController::class, 'store'])->name('receita.store');
+    Route::get('/patient/create', [PatientController::class, 'create'])->name('patient.create');
 });
 Route::middleware(['checkIfPatient'])->group(function () {
-    Route::resource('/patient', PatientController::class);
+    Route::resource('/patient', PatientController::class)->except(['create']);
 });
 Route::middleware(['checkIfPharmacist'])->group(function () {
     Route::resource('/pharmacist', PharmacistController::class);
+    Route::get('/patient/create', [PatientController::class, 'create'])->name('patient.create');
 });
 
 // Authenticated profile and ticket routes

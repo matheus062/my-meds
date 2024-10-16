@@ -14,7 +14,6 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $userId = Auth::user()->id;
-
         $queryPacientes = Paciente::with('user', 'lembretes', 'receitas')->where('usuario', $userId);
         $queryReceitas = Receita::with(['medico.user', 'paciente.user'])->whereHas('paciente', function ($query) use ($userId) {
             $query->where('usuario', $userId);
@@ -23,26 +22,31 @@ class PatientController extends Controller
         if ($request->filled('filter')) {
             $filter = $request->input('filter');
 
-            $queryPacientes->where(function ($query) use ($filter) {
-                $query->where('identifier', $filter)
-                      ->orWhereHas('user', function ($q) use ($filter) {
-                          $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($filter) . '%'])
-                            ->orWhereRaw('LOWER(rg) LIKE ?', ['%' . strtolower($filter) . '%'])
-                            ->orWhereRaw('LOWER(cpf) LIKE ?', ['%' . strtolower($filter) . '%'])
-                            ->orWhereRaw('LOWER(endereco) LIKE ?', ['%' . strtolower($filter) . '%'])
-                            ->orWhereRaw('LOWER(telefone) LIKE ?', ['%' . strtolower($filter) . '%']);
-                      });
-            });
+           // Filtrar pacientes
+           $queryPacientes->where(function($q) use ($filter) {
+            $q->orWhereHas('user', function ($query) use ($filter) {
+                  $query->whereRaw('LOWER(name) LIKE ?', ["%{$filter}%"])
+                        ->orWhereRaw('LOWER(rg) LIKE ?', ["%{$filter}%"])
+                        ->orWhereRaw('LOWER(cpf) LIKE ?', ["%{$filter}%"])
+                        ->orWhereRaw('LOWER(endereco) LIKE ?', ["%{$filter}%"])
+                        ->orWhereRaw('LOWER(telefone) LIKE ?', ["%{$filter}%"]);
+              });
+        });
 
-            $queryReceitas->where(function ($query) use ($filter) {
-                $query->where('codigoUnico', $filter)
-                      ->orWhereRaw('LOWER(tipoEspecial) LIKE ?', ['%' . strtolower($filter) . '%'])
-                      ->orWhereHas('paciente.user', function ($q) use ($filter) {
-                          $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($filter) . '%']);
-                      })
-                      ->orWhereHas('medico.user', function ($q) use ($filter) {
-                          $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($filter) . '%']);
-                      });
+            // Filtrar receitas
+            $queryReceitas->where(function($q) use ($filter) {
+                $q->whereRaw('LOWER(codigoUnico) LIKE ?', ["%{$filter}%"])
+                  ->orWhereRaw('LOWER(tipoEspecial) LIKE ?', ["%{$filter}%"])
+                  ->orWhereRaw('LOWER(observacoes) LIKE ?', ["%{$filter}%"])
+                  ->orWhereHas('paciente.user', function ($query) use ($filter) {
+                      $query->whereRaw('LOWER(name) LIKE ?', ["%{$filter}%"]);
+                  })
+                  ->orWhereHas('medico.user', function ($query) use ($filter) {
+                      $query->whereRaw('LOWER(name) LIKE ?', ["%{$filter}%"]);
+                  })
+                  ->orWhereHas('medico', function ($query) use ($filter) {
+                      $query->whereRaw('LOWER(crm) LIKE ?', ["%{$filter}%"]);
+                  });
             });
         }
 
@@ -51,6 +55,7 @@ class PatientController extends Controller
 
         return view('patient.index', compact('pacientes', 'receitas'));
     }
+
 
 
     public function create()

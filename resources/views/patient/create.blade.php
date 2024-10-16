@@ -1,4 +1,3 @@
-
 <x-app-layout>
     <x-bladewind::card>
         <form method="POST" action="{{ route('patient.store') }}">
@@ -19,7 +18,6 @@
             <x-bladewind::input name="rg" required="true" prefix="RG" numeric="true"/>
             <x-bladewind::input name="endereco" required="true" prefix="Endereço" />
             <x-bladewind::button can_submit="true">Cadastrar</x-bladewind::button>
-        </form>        
+        </form>
     </x-bladewind::card>
 </x-app-layout>
-                        
