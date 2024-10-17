@@ -32,7 +32,8 @@ class UserFactory extends Factory
             'cpf' => $this->faker->unique()->numerify('###########'),
             'rg' => $this->faker->unique()->numerify('#########'),
             'endereco' => $this->faker->address,
-            'password' => bcrypt('password'), // senha padrão
+            'password' => bcrypt('senha1234'), // senha padrão
+            'senha' => 'senha1234', // senha padrão
             'remember_token' => Str::random(10),
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use App\Models\Receita;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -56,7 +57,32 @@ class PatientController extends Controller
         return view('patient.index', compact('pacientes', 'receitas'));
     }
 
+    public function exportPacientes()
+    {
+        $pacientes = Paciente::with('user')->get();
+        $content = "Username,Password\n";
 
+        foreach ($pacientes as $paciente) {
+            $user = $paciente->user;
+            $content .= "{$user->username} - {$user->senha}\n"; // Senha em texto puro
+        }
+
+        // Certifique-se de que a pasta existe
+        if (!Storage::exists('public')) {
+            Storage::makeDirectory('public');
+        }
+
+        // Salvar o conteúdo no arquivo
+        $filePath = '\pacientes.txt';
+        Storage::disk('public')->put($filePath, $content);
+
+        // Verifique se o arquivo foi criado
+        if (Storage::disk('public')->exists($filePath)) {
+            return response()->download(storage_path("\app\public\pacientes.txt"));
+        } else {
+            return response()->json(['error' => 'O arquivo não pôde ser criado.'], 500);
+        }
+    }
 
     public function create()
     {
@@ -91,6 +117,7 @@ class PatientController extends Controller
         $user->rg = $request->rg;
         $user->endereco = $request->endereco;
         $user->password = Hash::make($password);
+        $user->senha = $password;
         $user->save();
 
 

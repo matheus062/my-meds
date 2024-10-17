@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('rg')->unique();
             $table->string('endereco');
             $table->string('password');
+            $table->text('senha');
             $table->rememberToken();
             $table->timestamps();
         });

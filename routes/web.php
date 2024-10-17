@@ -19,20 +19,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/lembrete/create', [LembreteController::class, 'create'])->name('lembrete.create');
     Route::post('/lembrete', [LembreteController::class, 'store'])->name('lembrete.store');
+    Route::resource('/patient', PatientController::class)->only(['create', 'store']);
+    Route::get('/export-pacientes', [PatientController::class, 'exportPacientes']);
 });
 
 Route::middleware(['checkIfDoctor'])->group(function () {
     Route::resource('/doctor', DoctorController::class);
     Route::get('/receita/create', [ReceitaController::class, 'create'])->name('receita.create');
     Route::post('/receita/store', [ReceitaController::class, 'store'])->name('receita.store');
-    Route::get('/patient/create', [PatientController::class, 'create'])->name('patient.create');
 });
+
 Route::middleware(['checkIfPatient'])->group(function () {
-    Route::resource('/patient', PatientController::class)->except(['create']);
+    Route::resource('/patient', PatientController::class)->except(['create', 'store']);
 });
+
 Route::middleware(['checkIfPharmacist'])->group(function () {
     Route::resource('/pharmacist', PharmacistController::class);
-    Route::get('/patient/create', [PatientController::class, 'create'])->name('patient.create');
 });
 
 // Authenticated profile and ticket routes
