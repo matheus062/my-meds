@@ -32,6 +32,9 @@
                     <strong>Médico:</strong> {{ $receita->medico->user->name ?? 'N/A' }}<br>
                     <strong>CRM:</strong> {{ $receita->medico->crm ?? 'N/A' }}<br>
                     <strong>Paciente:</strong> {{ $receita->paciente->user->name ?? 'N/A' }}<br>
+                    <a href="{{ route('receita.edit', $receita->id) }}" class="btn btn-primary mt-2">
+                        Editar Receita
+                    </a>
                 </div>
             @endforeach
         </div>

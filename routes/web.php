@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LembreteController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PharmacistController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReceitaController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LembreteController;
 
 
 // Redirect root to profile
@@ -27,6 +27,12 @@ Route::middleware(['checkIfDoctor'])->group(function () {
     Route::resource('/doctor', DoctorController::class);
     Route::get('/receita/create', [ReceitaController::class, 'create'])->name('receita.create');
     Route::post('/receita/store', [ReceitaController::class, 'store'])->name('receita.store');
+
+    Route::get('/receita/{id}/edit', [ReceitaController::class, 'edit'])->name('receita.edit');
+    Route::put('/receita/{id}/update', [ReceitaController::class, 'update'])->name('receita.update');
+
+//    Route::put('/receita/update', [ReceitaController::class, 'update'])->name('receita.update');
+
 });
 
 Route::middleware(['checkIfPatient'])->group(function () {
